@@ -2,14 +2,8 @@ from selenium import webdriver
 from selenium import *
 import requests
 import json
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from selenium.common.exceptions import NoSuchElementException
 from time import sleep
-import re
 
 month_dict = {
     "January": "01",
@@ -29,10 +23,10 @@ month_dict = {
 
 class MoodleReader:
     def __init__(self, username, password, telegram_api,
-                 telegram_chat, phone, token, databaseId,
+                 telegram_chat, phone, token, databaseId, chrome_profile,
                  debug = True, notify_user = False) -> None:
         options = webdriver.ChromeOptions() 
-        options.add_argument("user-data-dir=/Users/ao/Library/Application Support/Google/Chrome") #Path to your chrome profile
+        options.add_argument(chrome_profile) #Path to your chrome profile
         options.add_argument("--no-proxy-server")
         options.add_argument("--disable-extensions")
         options.add_argument("disable-infobars")
@@ -251,6 +245,7 @@ if __name__ == "__main__":
                                         phone,
                                         data['notion']['token'],
                                         data['notion']['database_id'],
+                                        data['chrome']['chrome_profile'],
                                         True, 
                                         True
                                         )
